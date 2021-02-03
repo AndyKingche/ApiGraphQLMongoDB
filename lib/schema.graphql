@@ -1,0 +1,161 @@
+type Usuarios {
+    _id: ID!
+    nombre: String!
+    email: String!
+    nickname: String!
+    login: String!
+    password: String!
+}
+input UsuarioInput {
+    nombre: String!
+    email: String!
+    nickname: String!
+    login: String!
+    password: String!
+}
+input UsuarioEdit {
+    nombre: String
+    email: String
+    nickname: String
+    login: String
+    password: String
+}
+
+type Comentarios{
+    _id:ID!
+    contenido: String!
+    usuariosid:[Usuarios]
+}
+input ComentarioInput{
+    contenido: String!
+    usuariosid:ID!
+}
+input ComentarioEdit{
+    contenido: String
+    usuariosid:ID
+}
+type Categorias{
+    _id:ID!
+    nombre_categoria:String!
+}
+input CategoriaInput{
+    nombre_categoria:String!
+}
+input CategoriaEdit{
+    nombre_categoria:String
+}
+type Etiquetas{
+    _id:ID!
+    nombre_etiqueta:String!
+
+}
+input EtiquetaInput{
+    nombre_etiqueta:String!
+
+}
+input EtiquetaEdit{
+    nombre_etiqueta:String
+}
+
+type Posts{
+    _id:ID!
+    titulo:String!
+    "formato de fecha: mes - dia - año"
+    fecha_publicacion: String!
+    estado:Boolean!
+    categoriasid:[Categorias]
+    comentarioid:[Comentarios]
+    usuariosid:[Usuarios]
+}
+input PostInput{
+    titulo:String!
+    "formato de fecha:  mes - dia - año"
+    fecha_publicacion: String!
+    estado:Boolean!
+    categoriasid:ID!
+    comentarioid:ID!
+    usuariosid:ID!
+}
+input PostEdit{
+    titulo:String!
+    "formato de fecha:  mes - dia - año"
+    fecha_publicacion: String!
+    estado:Boolean!
+    categoriasid:ID
+    comentarioid:ID
+    usuariosid:ID
+}
+type PostEtiquetas{
+    idetiqueta:[Etiquetas]
+    idpost:[Posts]
+}
+input PostEtiquetaInput{
+    idetiqueta:Int!
+    idpost:Int!
+}
+input PostEtiquetaEdit{
+    idetiqueta:Int
+    idpost:Int
+}
+type Query{
+    "Devuelve todos los Usuarios"
+    getUsuarios:[Usuarios]
+    "Devuelve un solo Usuario, el que ud defina"
+    getUsuario(id:ID!):Usuarios
+    "Devuelve todas las Categorias"
+    getCategorias:[Categorias]
+    "Devuelve una sola categoria, el que ud defina"
+    getCategoria(id:ID!):Categorias
+    "Devuelve todas las Etiquetas"
+    getEtiquetas:[Etiquetas]
+    "Devuelve una sola Etiqueta, la que ud defina"
+    getEtiqueta(id:ID!):Etiquetas
+    "Devuelve todos los comentarios"
+    getComentarios:[Comentarios]
+    "Devuelve un solo comentario, la que ud defina"
+    getComentario(id:ID!):Comentarios
+    "Devuelve todos los posts"
+    getPosts:[Posts]
+    "Devuelve un solo post, la que ud defina"
+    getPost(id:ID!):Posts
+    "Devuelve todos los Post etiquetas"
+    getPostEtiquetas:[PostEtiquetas]
+    "Devuelve un solo Post Etiqueta por id"
+    getPostEtiqueta(id:ID!):PostEtiquetas
+}
+type Mutation{
+    "Crear un Usuario"
+    createUsuario(input: UsuarioInput!):Usuarios
+    "Editar un Usuario"
+    editUsuario(id:ID!, input:UsuarioEdit!):Usuarios
+    "Eliminar un Usuario"
+    deleteUsuario(id:ID!):Usuarios
+    "Crear una Categoria"
+    createCategoria(input: CategoriaInput!):Categorias
+    "Editar una Categoria"
+    editCategoria(id:ID!, input: CategoriaEdit!):Categorias
+    "Eliminar una categoria"
+    deleteCategoria(id:ID!):Categorias
+    "Crear una Etiqueta"
+    createEtiqueta(input: EtiquetaInput!):Etiquetas
+    "Editar una etiqueta"
+    editEtiqueta(id:ID!, input: EtiquetaEdit!):Etiquetas
+    "Eliminar una etiqueta"
+    deleteEtiqueta(id:ID!):Etiquetas
+    "Crear un Comentario"
+    createComentario(input: ComentarioInput!):Comentarios
+    "Editar un Comentario"
+    editComentario(id:ID!, input:ComentarioEdit!):Comentarios
+    "Eliminar un Comentario"
+    deleteComentario(id:ID!):Comentarios
+    "Crear un Post"
+    createPost(input: PostInput!): Posts
+    "Editar un Post"
+    editPost(id:ID!,input:PostEdit!):Posts
+    "Eliminar un Post"
+    deletePost(id:ID!):Posts
+    "Crear un Post Etiqueta"
+    createPostEtiqueta(input: PostEtiquetaInput ): PostEtiquetas
+    "Editar un Post Etiqueta"
+    editPostEtiqueta(id1:ID!,id2:ID!):PostEtiquetas
+    }

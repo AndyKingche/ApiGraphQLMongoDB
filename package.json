@@ -1,0 +1,29 @@
+{
+  "name": "blog-nosql",
+  "version": "1.0.0",
+  "description": "Es una Api GraphQL que consume datos de una base de datos no sql",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon -e js, graphql index",
+    "lint": "standard",
+    "lint-fix": "standard --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Api",
+    "graphQL",
+    "noSQL"
+  ],
+  "author": "Andres Quinche",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.4.0",
+    "graphql-tools": "^7.0.2",
+    "mongodb": "^3.6.3",
+    "redis": "^3.0.2"
+  }
+}
