@@ -5,6 +5,8 @@ type Usuarios {
     nickname: String!
     login: String!
     password: String!
+     "Masculino: 'M' o Femenino: 'F'"
+    genero:String!
 }
 input UsuarioInput {
     nombre: String!
@@ -12,6 +14,8 @@ input UsuarioInput {
     nickname: String!
     login: String!
     password: String!
+     "Masculino: 'M' o Femenino: 'F'"
+    genero:String!
 }
 input UsuarioEdit {
     nombre: String
@@ -19,9 +23,17 @@ input UsuarioEdit {
     nickname: String
     login: String
     password: String
+     "Masculino: 'M' o Femenino: 'F'"
+    genero:String!
 }
 
 type Comentarios{
+    _id:ID!
+    contenido: String!
+    usuariosid:[Usuarios]
+    postsid:[PostsComentario]
+}
+type ComentariosPost{
     _id:ID!
     contenido: String!
     usuariosid:[Usuarios]
@@ -29,10 +41,10 @@ type Comentarios{
 input ComentarioInput{
     contenido: String!
     usuariosid:ID!
+    postsid:ID!
 }
 input ComentarioEdit{
     contenido: String
-    usuariosid:ID
 }
 type Categorias{
     _id:ID!
@@ -62,9 +74,22 @@ type Posts{
     titulo:String!
     "formato de fecha: mes - dia - año"
     fecha_publicacion: String!
+    contenido:String!
+    keywords:String!
     estado:Boolean!
     categoriasid:[Categorias]
-    comentarioid:[Comentarios]
+    comentarios:[ComentariosPost]
+    usuariosid:[Usuarios]
+}
+type PostsComentario{
+    _id:ID!
+    titulo:String!
+    "formato de fecha: mes - dia - año"
+    fecha_publicacion: String!
+    contenido:String!
+    keywords:String!
+    estado:Boolean!
+    categoriasid:[Categorias]
     usuariosid:[Usuarios]
 }
 input PostInput{
@@ -72,18 +97,19 @@ input PostInput{
     "formato de fecha:  mes - dia - año"
     fecha_publicacion: String!
     estado:Boolean!
+    contenido:String!
+    keywords:String!
     categoriasid:ID!
-    comentarioid:ID!
     usuariosid:ID!
 }
 input PostEdit{
-    titulo:String!
+    titulo:String
     "formato de fecha:  mes - dia - año"
-    fecha_publicacion: String!
-    estado:Boolean!
+    fecha_publicacion: String
+    estado:Boolean
+    contenido:String
+    keywords:String
     categoriasid:ID
-    comentarioid:ID
-    usuariosid:ID
 }
 type PostEtiquetas{
     idetiqueta:[Etiquetas]
@@ -93,17 +119,19 @@ input PostEtiquetaInput{
     idetiqueta:Int!
     idpost:Int!
 }
+
 input PostEtiquetaEdit{
     idetiqueta:Int
     idpost:Int
 }
+
 type Query{
     "Devuelve todos los Usuarios"
-    getUsuarios:[Usuarios]
+    getUsuarios(limit:Int):[Usuarios]
     "Devuelve un solo Usuario, el que ud defina"
     getUsuario(id:ID!):Usuarios
     "Devuelve todas las Categorias"
-    getCategorias:[Categorias]
+    getCategorias(limit:Int):[Categorias]
     "Devuelve una sola categoria, el que ud defina"
     getCategoria(id:ID!):Categorias
     "Devuelve todas las Etiquetas"
@@ -111,11 +139,11 @@ type Query{
     "Devuelve una sola Etiqueta, la que ud defina"
     getEtiqueta(id:ID!):Etiquetas
     "Devuelve todos los comentarios"
-    getComentarios:[Comentarios]
+    getComentarios(limit:Int):[Comentarios]
     "Devuelve un solo comentario, la que ud defina"
     getComentario(id:ID!):Comentarios
     "Devuelve todos los posts"
-    getPosts:[Posts]
+    getPosts(limit:Int):[Posts]
     "Devuelve un solo post, la que ud defina"
     getPost(id:ID!):Posts
     "Devuelve todos los Post etiquetas"
@@ -123,6 +151,7 @@ type Query{
     "Devuelve un solo Post Etiqueta por id"
     getPostEtiqueta(id:ID!):PostEtiquetas
 }
+
 type Mutation{
     "Crear un Usuario"
     createUsuario(input: UsuarioInput!):Usuarios

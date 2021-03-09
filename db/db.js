@@ -1,5 +1,5 @@
 'use strict'
-const { MongoClient } = require('mongodb')
+const { Logger, MongoClient } = require('mongodb')
 const { //aqui ubicamos las variables que se creo en el archivo donde se puso las variables de entorno
 DB_USER,
 DB_PASSWD,
@@ -32,4 +32,11 @@ try {
 }
 return connection
 }
-module.exports = connectDB
+
+connectDB()
+const getNameCollection= async(getNameCollection)=>{
+    const db = (await connectDB())
+    return db.collection(getNameCollection)
+}
+module.exports = {mongodb:getNameCollection}
+
