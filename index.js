@@ -23,5 +23,5 @@ app.use('/api', graphqlHTTP({
 }))
 
 app.listen(port, () => {
-  console.log(`El servidor se esta ejecutando en : http://localhost:${port}/api`)
+  console.log(`El servidor se esta ejecutando en : http://localhost:${port}/api/mongodb`)
 })

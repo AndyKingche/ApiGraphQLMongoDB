@@ -22,7 +22,8 @@ let client // la variable client es aquella que recibira la conexion
 try {
     client = await new MongoClient.connect(mongoUrl,{
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        poolSize: 5000000
     });
     connection = await client.db(DB_NAME)
 } catch (error) {
@@ -38,5 +39,13 @@ const getNameCollection= async(getNameCollection)=>{
     const db = (await connectDB())
     return db.collection(getNameCollection)
 }
-module.exports = {mongodb:getNameCollection}
+const mongo = {
+    user:getNameCollection('usuarios'),
+    category:getNameCollection('categorias'),
+    posts:getNameCollection('posts'),
+    comentarios: getNameCollection('posts')
+}
+module.exports = {mongodb:getNameCollection,
+    modelo: mongo
+}
 
